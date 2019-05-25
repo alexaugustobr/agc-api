@@ -99,6 +99,7 @@ open class Usuario : AbstractModel, UserDetails {
 
     open fun getPainelUrl() = "painel"
 
+    @JsonIgnore
     open fun getSenhaPadrao() = BCryptPasswordEncoder().encode("senha")
 
     open fun parse(usuario: Usuario): Usuario {
