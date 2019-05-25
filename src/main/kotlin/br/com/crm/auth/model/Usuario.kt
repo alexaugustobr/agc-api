@@ -2,6 +2,7 @@ package br.com.crm.auth.model
 
 import br.com.crm.auth.enumx.Role
 import br.com.crm.auth.vo.UsuarioEdicaoVO
+import br.com.crm.db.model.AbstractModel
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority

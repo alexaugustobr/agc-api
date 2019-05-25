@@ -1,4 +1,4 @@
-package br.com.crm.auth.model
+package br.com.crm.db.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.hibernate.annotations.GenericGenerator
