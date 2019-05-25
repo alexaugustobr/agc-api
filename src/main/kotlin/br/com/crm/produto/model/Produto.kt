@@ -2,8 +2,10 @@ package br.com.crm.produto.model
 
 import br.com.crm.db.model.AbstractModel
 import java.util.*
+import javax.persistence.Entity
 import javax.validation.constraints.NotBlank
 
+@Entity
 class Produto : AbstractModel {
 
     @NotBlank
@@ -11,6 +13,11 @@ class Produto : AbstractModel {
     var preco : Double = Double.NaN
 
     constructor(nome: String, preco: Double) : super() {
+        this.nome = nome
+        this.preco = preco
+    }
+
+    constructor(excluido: Boolean, nome: String, preco: Double) : super(excluido) {
         this.nome = nome
         this.preco = preco
     }
