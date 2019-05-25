@@ -27,12 +27,21 @@ abstract class AbstractModel : Serializable {
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     var excluido : Boolean = false
 
-
-
     constructor()
 
     constructor(id: UUID?) {
         this.id = id
+    }
+
+    constructor(excluido: Boolean) {
+        this.excluido = excluido
+    }
+
+    constructor(id: UUID?, dataCriacao: Date, dataExclusao: Date?, excluido: Boolean) {
+        this.id = id
+        this.dataCriacao = dataCriacao
+        this.dataExclusao = dataExclusao
+        this.excluido = excluido
     }
 
     override fun equals(other: Any?): Boolean {
