@@ -1,7 +1,7 @@
 package br.com.crm.auth.security.jwt.auth
 
-import br.com.crm.auth.model.Usuario
 import br.com.crm.auth.security.jwt.model.token.RawAccessJwtToken
+import br.com.crm.usuario.model.Usuario
 import org.springframework.security.authentication.AbstractAuthenticationToken
 import org.springframework.security.core.GrantedAuthority
 

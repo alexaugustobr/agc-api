@@ -1,7 +1,7 @@
 package br.com.crm.auth.security.jwt.model.token
 
-import br.com.crm.auth.model.Usuario
 import br.com.crm.auth.security.jwt.config.JwtSettings
+import br.com.crm.usuario.model.Usuario
 import io.jsonwebtoken.Jwts
 import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired

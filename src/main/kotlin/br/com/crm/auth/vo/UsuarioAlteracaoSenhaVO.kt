@@ -1,7 +1,7 @@
 package br.com.crm.auth.vo
 
-import br.com.crm.auth.model.Usuario
 import br.com.crm.auth.security.UsuarioUtil
+import br.com.crm.usuario.model.Usuario
 import org.apache.commons.lang3.StringUtils
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component

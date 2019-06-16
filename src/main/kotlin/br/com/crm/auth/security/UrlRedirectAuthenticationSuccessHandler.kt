@@ -1,7 +1,7 @@
 package br.com.crm.auth.security
 
-import br.com.crm.auth.model.UsuarioBackoffice
 import br.com.crm.auth.model.UsuarioCompany
+import br.com.crm.backoffice.usuario.model.UsuarioBackoffice
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.DefaultRedirectStrategy
 import org.springframework.security.web.WebAttributes

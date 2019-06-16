@@ -1,7 +1,7 @@
 package br.com.crm.auth.security.jwt.handler
 
-import br.com.crm.auth.model.Usuario
 import br.com.crm.auth.security.jwt.model.token.JwtTokenFactory
+import br.com.crm.usuario.model.Usuario
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus

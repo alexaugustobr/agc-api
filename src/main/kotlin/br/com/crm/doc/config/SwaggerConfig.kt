@@ -78,9 +78,9 @@ class SwaggerConfig {
                 .host(url)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController::class.java))
-                .paths(regex("/api/v1/.*")).build()
+                .paths(regex("/api/v1/backoffice/.*")).build()
                 .apiInfo(apiInfo())
-                .groupName("API-V1-Administrador")
+                .groupName("API-V1-Backoffice")
                 .globalResponseMessage(RequestMethod.GET, mutableListOf<ResponseMessage>(
                         ResponseMessageBuilder()
                                 .code(404)

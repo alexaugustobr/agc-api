@@ -1,6 +1,6 @@
 package br.com.crm.auth.security
 
-import br.com.crm.auth.model.Usuario
+import br.com.crm.usuario.model.Usuario
 import org.springframework.security.core.context.SecurityContextHolder
 
 object UsuarioUtil {
