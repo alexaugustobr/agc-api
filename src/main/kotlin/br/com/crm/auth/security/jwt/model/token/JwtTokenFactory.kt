@@ -18,7 +18,8 @@ constructor(@field:Autowired
     fun createAccessJwtToken(userContext: Usuario): AccessJwtToken {
         if (StringUtils.isBlank(userContext.username)) throw IllegalArgumentException("Não é possivel criar o token JWT sem nome de usuário")
 
-        if (userContext.authorities.isEmpty()) throw IllegalArgumentException("Usuario não tem permissões no perfil")
+        //TODO FIX ME ADICIONAR AUTHORITIES
+        //if (userContext.authorities.isEmpty()) throw IllegalArgumentException("Usuario não tem permissões no perfil")
 
         val claims = Jwts.claims().setSubject(userContext.username)
         val roles = mutableListOf<String>()
