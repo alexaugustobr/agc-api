@@ -14,10 +14,10 @@ import javax.transaction.Transactional
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
 //@PropertySource("src/test/resources/application-pgtest.properties")
-class H2DbBaiscTest {
+class H2DbBasicTest {
 
     @Test
-    fun cadastrar_duas_disciplinas_e_bucar_as_duas_de_uma_vez() {
+    fun cadastrar_duas_disciplinas_e_buscar_as_duas_de_uma_vez() {
 
     }
 

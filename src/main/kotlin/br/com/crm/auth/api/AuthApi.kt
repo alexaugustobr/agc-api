@@ -1,9 +1,9 @@
 package br.com.crm.auth.api
 
-import br.com.crm.auth.model.Usuario
 import br.com.crm.auth.security.jwt.auth.JwtAuthenticationToken
 import br.com.crm.auth.security.jwt.model.JWTResponseToken
 import br.com.crm.auth.security.jwt.model.LoginRequestTO
+import br.com.crm.usuario.model.Usuario
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse

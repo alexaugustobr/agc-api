@@ -1,9 +1,9 @@
 package br.com.crm.auth.security
 
 import br.com.crm.auth.exception.UsuarioInativoException
-import br.com.crm.auth.repository.UsuarioRepository
+import br.com.crm.usuario.dao.UsuarioRepository
+import br.com.crm.usuario.model.Usuario
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
@@ -14,17 +14,15 @@ class UserDetailsServiceImpl(val usuarioRepository : UsuarioRepository) : UserDe
 
     @Throws(UsernameNotFoundException::class, UsuarioInativoException::class)
     @Transactional(value = Transactional.TxType.REQUIRES_NEW)
-    override fun loadUserByUsername(email: String): UserDetails {
+    override fun loadUserByUsername(email: String): Usuario {
 
-        val usuario = usuarioRepository.findOneWithPermissoesByEmail(email)
+        val usuario = usuarioRepository.buscarUmComPermissoesPorEmail(email)
 
         if (!usuario.isPresent) throw UsernameNotFoundException(email)
 
         if (!usuario.get().isEnabled) throw BadCredentialsException("Usuário não está habilitado")
 
         if (usuario.get().permissoes.isEmpty()) throw BadCredentialsException("Usuário não possui permissões")
-
-        //TODO(RETONRAR UM DTO PARA CADA TIPO DE USUARIO )
 
         return usuario.get()
     }

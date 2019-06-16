@@ -6,25 +6,10 @@ import javax.persistence.Entity
 import javax.validation.constraints.NotBlank
 
 @Entity
-class Produto : AbstractModel {
+class Produto(@NotBlank
+              open var nome  : String = "",
+              open var preco : Double = Double.NaN, id: UUID?, dataCriacao: Date, dataExclusao: Date?, excluido: Boolean
+) : AbstractModel(id, dataCriacao, dataExclusao, excluido) {
 
-    @NotBlank
-    var nome  : String = ""
-    var preco : Double = Double.NaN
 
-    constructor(nome: String, preco: Double) : super() {
-        this.nome = nome
-        this.preco = preco
-    }
-
-    constructor(excluido: Boolean, nome: String, preco: Double) : super(excluido) {
-        this.nome = nome
-        this.preco = preco
-    }
-
-    constructor(id: UUID?, dataCriacao: Date, dataExclusao: Date?, excluido: Boolean, nome: String, preco: Double) :
-        super(id, dataCriacao, dataExclusao, excluido) {
-        this.nome = nome
-        this.preco = preco
-    }
 }

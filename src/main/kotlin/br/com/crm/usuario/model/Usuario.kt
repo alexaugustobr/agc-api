@@ -1,8 +1,9 @@
-package br.com.crm.auth.model
+package br.com.crm.usuario.model
 
 import br.com.crm.auth.enumx.Role
 import br.com.crm.auth.vo.UsuarioEdicaoVO
 import br.com.crm.db.model.AbstractModel
+import br.com.crm.usuario.dto.UsuarioDTO
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -14,53 +15,24 @@ import javax.validation.constraints.NotBlank
 
 
 @Entity
-open class Usuario : AbstractModel, UserDetails {
-
-    @NotBlank
-    var nome  : String = ""
-    @Column(unique = true)
-    @NotBlank(message = "Email é obrigatório.")
-    var email : String = ""
-    var ativo : Boolean = false
-    @JsonIgnore
-    var senha : String = ""
-    @ElementCollection(targetClass = Role::class)
-    @Enumerated(EnumType.STRING)
-    var permissoes: MutableSet<Role> = mutableSetOf()
-
-    constructor() : super()
-
-
-
-    constructor(nome: String) : super() {
-        this.nome = nome
-    }
-
-    constructor(id: UUID? = null, nome: String) : super(id) {
-        this.nome = nome
-    }
-
-    constructor(nome: String, email: String, ativo: Boolean, senha: String, permissoes: MutableSet<Role>) : super() {
-        this.nome = nome
-        this.email = email
-        this.ativo = ativo
-        this.senha = senha
-        this.permissoes = permissoes
-    }
-
-    constructor(email: String, authorities: MutableSet<GrantedAuthority>) : super() {
-        this.email = email
-        for (authority in authorities) {
-            permissoes.add(Role.valueOf(authority.authority))
-        }
-
-    }
-
-    constructor(id: UUID?) : super(id)
-
-    constructor(permissoes : MutableSet<Role>) : super() {
-        this.permissoes = permissoes
-    }
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+open class Usuario(
+        @NotBlank
+        open var nome  : String = "",
+        @Column(unique = true)
+        @NotBlank(message = "Email é obrigatório.")
+        open var email : String = "",
+        open var ativo : Boolean = false,
+        @JsonIgnore
+        open var senha : String = "",
+        @ElementCollection(targetClass = Role::class)
+        @Enumerated(EnumType.STRING)
+        open var permissoes: MutableSet<Role> = mutableSetOf(),
+        id: UUID? = null,
+        dataCriacao: Date = Date(),
+        dataExclusao: Date? = null,
+        excluido: Boolean = false
+) : AbstractModel(id, dataCriacao, dataExclusao, excluido), UserDetails {
 
     @JsonIgnore
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
@@ -97,26 +69,42 @@ open class Usuario : AbstractModel, UserDetails {
     override fun isAccountNonLocked(): Boolean {
         return ativo && !excluido
     }
-
-    open fun getPainelUrl() = "painel"
-
     @JsonIgnore
-    open fun getSenhaPadrao() = BCryptPasswordEncoder().encode("senha")
+    open fun gerarSenhaPadrao() = BCryptPasswordEncoder().encode("senha")
 
     open fun parse(usuario: Usuario): Usuario {
-
         this.email = usuario.email
         this.nome = usuario.nome
-
-
         return this
     }
 
     fun parse(usuario: UsuarioEdicaoVO): Usuario {
-
         this.nome = usuario.nome
         this.email = usuario.email
+        return this
+    }
 
+    companion object {
+        fun criarNovo(usuarioDTO: UsuarioDTO): Usuario {
+            return Usuario.of(usuarioDTO).salvarSenhaCriptografada(usuarioDTO.senha)
+        }
+
+        fun of (usuarioDTO: UsuarioDTO) : Usuario{
+            return Usuario(
+                    email = usuarioDTO.email,
+                    nome = usuarioDTO.nome
+            )
+        }
+    }
+
+    private fun salvarSenhaCriptografada(senha: String): Usuario {
+        this.senha = BCryptPasswordEncoder().encode(senha)
+        return this
+    }
+
+    open fun atualizar(usuarioDTO: UsuarioDTO) : Usuario {
+        this.email = email
+        this.nome = nome
         return this
     }
 

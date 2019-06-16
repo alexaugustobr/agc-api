@@ -1,6 +1,5 @@
 package br.com.crm.auth.security.jwt.provider
 
-import br.com.crm.auth.model.Usuario
 import br.com.crm.auth.security.UserDetailsServiceImpl
 import br.com.crm.auth.security.jwt.auth.JwtAuthenticationToken
 import br.com.crm.auth.security.jwt.config.JwtSettings
@@ -34,15 +33,13 @@ class JwtAuthenticationProvider(private val jwtSettings: JwtSettings, private va
             authorities.add(SimpleGrantedAuthority(scope as String))
         }
 
-        val context = Usuario(subject, authorities)
-
         val usuario = userDetailsService.loadUserByUsername(subject)
 
         if (!usuario.isEnabled) {
-            throw UsuarioDesabilitadoException("Usuario nao esta habilitado")
+            throw UsuarioDesabilitadoException("Usuário não está habilitado")
         }
 
-        return JwtAuthenticationToken(context, context.authorities)
+        return JwtAuthenticationToken(usuario, authorities)
     }
 
     override fun supports(authentication: Class<*>): Boolean {

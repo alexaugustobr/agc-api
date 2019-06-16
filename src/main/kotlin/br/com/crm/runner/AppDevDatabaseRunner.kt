@@ -1,9 +1,9 @@
-package br.com.crm
+package br.com.crm.runner
 
 import br.com.crm.auth.enumx.Role
-import br.com.crm.auth.model.UsuarioBackoffice
 import br.com.crm.auth.model.UsuarioCompany
-import br.com.crm.auth.repository.UsuarioRepository
+import br.com.crm.backoffice.usuario.model.UsuarioBackoffice
+import br.com.crm.usuario.dao.UsuarioRepository
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
@@ -18,10 +18,10 @@ class AppDevDatabaseRunner(val usuarioRepository: UsuarioRepository) : Applicati
     override fun run(args: ApplicationArguments?) = iniciarBanco()
 
     fun iniciarBanco() {
-        logger.info("Populando banco de com dados.")
+        logger.info("Criando banco de com dados.")
 
         if (!usuarioRepository.findAll().isEmpty()) {
-            logger.info("Base já esta populada.")
+            logger.info("Base já está criado.")
             return
         }
 

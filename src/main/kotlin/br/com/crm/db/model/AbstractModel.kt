@@ -7,42 +7,25 @@ import java.util.*
 import javax.persistence.*
 
 @MappedSuperclass
-abstract class AbstractModel : Serializable {
+abstract class AbstractModel(
+        @GeneratedValue(generator = "uuid2")
+        @GenericGenerator(name = "uuid2", strategy = "uuid2")
+        @Id
+        @Column(columnDefinition = "uuid")
+        var id: UUID? = null,
+
+        @Temporal(TemporalType.TIMESTAMP)
+        @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+        var dataCriacao : Date = Date(),
+
+        var dataExclusao : Date? = null,
+
+        @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+        var excluido : Boolean = false
+) : Serializable {
 
     @JsonProperty
     fun getType()  = this.javaClass.simpleName
-
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Id
-    @Column(columnDefinition = "uuid")
-    var id: UUID? = null
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    var dataCriacao : Date = Date()
-
-    var dataExclusao : Date? = null
-
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
-    var excluido : Boolean = false
-
-    constructor()
-
-    constructor(id: UUID?) {
-        this.id = id
-    }
-
-    constructor(excluido: Boolean) {
-        this.excluido = excluido
-    }
-
-    constructor(id: UUID?, dataCriacao: Date, dataExclusao: Date?, excluido: Boolean) {
-        this.id = id
-        this.dataCriacao = dataCriacao
-        this.dataExclusao = dataExclusao
-        this.excluido = excluido
-    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
