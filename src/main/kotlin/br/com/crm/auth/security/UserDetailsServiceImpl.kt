@@ -22,7 +22,8 @@ class UserDetailsServiceImpl(val usuarioRepository : UsuarioRepository) : UserDe
 
         if (!usuario.get().isEnabled) throw BadCredentialsException("Usuário não está habilitado")
 
-        if (usuario.get().permissoes.isEmpty()) throw BadCredentialsException("Usuário não possui permissões")
+        //TODO FIX ME ADICIONAR AUTHORITIES
+        //if (usuario.get().permissoes.isEmpty()) throw BadCredentialsException("Usuário não possui permissões")
 
         return usuario.get()
     }

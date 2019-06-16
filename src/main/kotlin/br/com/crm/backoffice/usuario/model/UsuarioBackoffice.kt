@@ -6,8 +6,11 @@ import br.com.crm.usuario.model.Usuario
 import javax.persistence.Entity
 
 @Entity
-open class UsuarioBackoffice(nome: String, email: String, ativo: Boolean, senha: String,
-                             permissoes: MutableSet<Role>) :
+open class UsuarioBackoffice(nome: String = "",
+                             email: String = "",
+                             ativo: Boolean = true,
+                             senha: String  = "",
+                             permissoes: MutableSet<Role> = mutableSetOf()) :
         Usuario(nome = nome, email = email, ativo = ativo, senha = senha, permissoes = permissoes) {
 
     override fun atualizar(usuarioDTO: UsuarioDTO) : UsuarioBackoffice {
@@ -16,11 +19,14 @@ open class UsuarioBackoffice(nome: String, email: String, ativo: Boolean, senha:
 
     companion object {
         fun criarNovo(usuarioDTO: UsuarioDTO): UsuarioBackoffice {
-            return Usuario.criarNovo(usuarioDTO) as UsuarioBackoffice
+            return UsuarioBackoffice.of(usuarioDTO).salvarSenhaCriptografada(usuarioDTO.senha) as UsuarioBackoffice
         }
 
         fun of (usuarioDTO: UsuarioDTO) : UsuarioBackoffice{
-            return Usuario.of(usuarioDTO) as UsuarioBackoffice
+            return UsuarioBackoffice(
+                    email = usuarioDTO.email,
+                    nome = usuarioDTO.nome
+            )
         }
     }
 

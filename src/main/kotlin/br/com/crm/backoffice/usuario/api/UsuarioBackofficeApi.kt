@@ -1,6 +1,7 @@
 package br.com.crm.backoffice.usuario.api
 
 import br.com.crm.backoffice.usuario.service.UsuarioBackofficeService
+import br.com.crm.sistema.constantes.URL
 import br.com.crm.usuario.dto.UsuarioDTO
 import io.swagger.annotations.Api
 import org.springframework.http.ResponseEntity
@@ -10,16 +11,16 @@ import javax.validation.Valid
 
 @RestController
 @Api
-@RequestMapping("/api/v1/backoffice/usuarios-backoffice")
+@RequestMapping(URL.API_USUARIO_BACKOFFICE)
 class UsuarioBackofficeApi(val usuarioBackofficeService: UsuarioBackofficeService) {
 
     @PostMapping
-    fun cadastrar(@Valid usuario: UsuarioDTO) : ResponseEntity<UsuarioDTO> {
+    fun cadastrar(@RequestBody @Valid usuario: UsuarioDTO) : ResponseEntity<UsuarioDTO> {
         return ResponseEntity.ok(usuarioBackofficeService.cadastrar(usuario))
     }
 
     @PutMapping("/{id}")
-    fun atualizar(@PathVariable id:  UUID, @Valid usuario: UsuarioDTO) : ResponseEntity<UsuarioDTO> {
+    fun atualizar(@PathVariable id:  UUID,@RequestBody @Valid usuario: UsuarioDTO) : ResponseEntity<UsuarioDTO> {
         return ResponseEntity.ok(usuarioBackofficeService.atualizar(id, usuario))
     }
 

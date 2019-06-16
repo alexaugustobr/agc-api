@@ -84,20 +84,7 @@ open class Usuario(
         return this
     }
 
-    companion object {
-        fun criarNovo(usuarioDTO: UsuarioDTO): Usuario {
-            return Usuario.of(usuarioDTO).salvarSenhaCriptografada(usuarioDTO.senha)
-        }
-
-        fun of (usuarioDTO: UsuarioDTO) : Usuario{
-            return Usuario(
-                    email = usuarioDTO.email,
-                    nome = usuarioDTO.nome
-            )
-        }
-    }
-
-    private fun salvarSenhaCriptografada(senha: String): Usuario {
+    open fun salvarSenhaCriptografada(senha: String): Usuario {
         this.senha = BCryptPasswordEncoder().encode(senha)
         return this
     }

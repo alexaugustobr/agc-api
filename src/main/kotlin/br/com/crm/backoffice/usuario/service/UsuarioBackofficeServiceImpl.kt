@@ -16,7 +16,9 @@ class UsuarioBackofficeServiceImpl(val usuarioBackofficeRepository: UsuarioBacko
 
         val usuario = UsuarioBackoffice.criarNovo(usuarioDto)
 
-        return UsuarioDTO.of(usuarioBackofficeRepository.save(usuario))
+        usuarioBackofficeRepository.save(usuario)
+
+        return UsuarioDTO.of(usuario)
     }
 
     override fun atualizar(id: UUID, usuarioDto: @Valid UsuarioDTO): UsuarioDTO {
