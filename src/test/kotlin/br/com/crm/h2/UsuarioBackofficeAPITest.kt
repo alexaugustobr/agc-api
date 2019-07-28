@@ -1,7 +1,7 @@
 package br.com.crm.h2
 
-import br.com.crm.sistema.constantes.URL
-import br.com.crm.usuario.dto.UsuarioDTO
+import br.com.crm.commons.usuario.dto.UsuarioDTO
+import br.com.crm.system.constantes.URL
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -26,30 +26,32 @@ class UsuarioBackofficeAPITest : H2DbBasicTest() {
     @Test
     fun cadastrarBuscarEListar() {
 
+
         val dto = UsuarioDTO(
                 nome = "alex",
                 email = "alex@email.com.br",
                 senha = "12345678"
         )
 
-        val httpHeaders = extrairToken(login(adminBackoffice).andReturn())
-
         val mvcPost = mockMvc.perform(MockMvcRequestBuilders.post(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .headers(httpHeaders)
-                .content(this.json(dto))
-        )
+                .headers(authenticationHeaders)
+                .content(this.json(dto)))
                 .andExpect(status().is2xxSuccessful).andReturn()
+
+
+
+
 
         val dtoSalvo = this.toObject(mvcPost.response.contentAsString!!, UsuarioDTO::class.java)!!
 
         val mvcGetLista = mockMvc.perform(MockMvcRequestBuilders.get(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .headers(httpHeaders)).andExpect(status().is2xxSuccessful).andReturn()
+                .headers(authenticationHeaders)).andExpect(status().is2xxSuccessful).andReturn()
 
         val mvcGetId = mockMvc.perform(MockMvcRequestBuilders.get(url + "/${dtoSalvo.id}")
                 .contentType(MediaType.APPLICATION_JSON)
-                .headers(httpHeaders)).andExpect(status().is2xxSuccessful).andReturn()
+                .headers(authenticationHeaders)).andExpect(status().is2xxSuccessful).andReturn()
 
     }
 

@@ -2,7 +2,7 @@ package br.com.crm.backoffice.usuario.service
 
 import br.com.crm.backoffice.usuario.dao.UsuarioBackofficeRepository
 import br.com.crm.backoffice.usuario.model.UsuarioBackoffice
-import br.com.crm.usuario.dto.UsuarioDTO
+import br.com.crm.commons.usuario.dto.UsuarioDTO
 import javassist.NotFoundException
 import org.springframework.stereotype.Service
 import java.util.*

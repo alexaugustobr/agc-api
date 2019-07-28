@@ -1,8 +1,9 @@
 package br.com.crm.backoffice.usuario.model
 
-import br.com.crm.auth.enumx.Role
-import br.com.crm.usuario.dto.UsuarioDTO
-import br.com.crm.usuario.model.Usuario
+import br.com.crm.commons.security.enumx.Role
+import br.com.crm.commons.usuario.dto.UsuarioDTO
+import br.com.crm.commons.usuario.model.Usuario
+import com.google.common.collect.Sets
 import javax.persistence.Entity
 
 @Entity
@@ -19,13 +20,14 @@ open class UsuarioBackoffice(nome: String = "",
 
     companion object {
         fun criarNovo(usuarioDTO: UsuarioDTO): UsuarioBackoffice {
-            return UsuarioBackoffice.of(usuarioDTO).salvarSenhaCriptografada(usuarioDTO.senha) as UsuarioBackoffice
+            return UsuarioBackoffice.of(usuarioDTO).salvarSenhaCriptografada(usuarioDTO.senha!!) as UsuarioBackoffice
         }
 
         fun of (usuarioDTO: UsuarioDTO) : UsuarioBackoffice{
             return UsuarioBackoffice(
                     email = usuarioDTO.email,
-                    nome = usuarioDTO.nome
+                    nome = usuarioDTO.nome,
+                    permissoes = Sets.newHashSet(Role.ROLE_BACKOFFICE)
             )
         }
     }
